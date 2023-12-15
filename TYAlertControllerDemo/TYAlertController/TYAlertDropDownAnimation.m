@@ -21,6 +21,9 @@
 - (void)presentAnimateTransition:(id<UIViewControllerContextTransitioning>)transitionContext
 {
     TYAlertController *alertController = (TYAlertController *)[transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+    if(![alertController isKindOfClass:[TYAlertController class]]){
+        return;
+    }
     
     alertController.backgroundView.alpha = 0.0;
     
@@ -39,7 +42,9 @@
     [containerView addSubview:alertController.view];
 
     [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:0.65 initialSpringVelocity:0.5 options:0 animations:^{
-        
+        if(![alertController isKindOfClass:[TYAlertController class]]){
+            return;
+        }
         alertController.backgroundView.alpha = 1.0;
         alertController.alertView.transform = CGAffineTransformIdentity;
         
@@ -51,8 +56,14 @@
 - (void)dismissAnimateTransition:(id<UIViewControllerContextTransitioning>)transitionContext
 {
     TYAlertController *alertController = (TYAlertController *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+    if(![alertController isKindOfClass:[TYAlertController class]]){
+        return;
+    }
     
     [UIView animateWithDuration:0.25 animations:^{
+        if(![alertController isKindOfClass:[TYAlertController class]]){
+            return;
+        }
         alertController.backgroundView.alpha = 0.0;
         switch (alertController.preferredStyle) {
             case TYAlertControllerStyleAlert:
